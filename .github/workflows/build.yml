@@ -1,0 +1,16 @@
+name: code
+on: [push, pull_request]
+jobs:
+  build:
+    strategy:
+      matrix:
+        plat: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.plat }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Run CMake generator
+        run: cmake . -B bin -DCMAKE_BUILD_TYPE=MinSizeRel
+      - name: Build project
+        run: cmake --build bin --config MinSizeRel
