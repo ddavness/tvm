@@ -18,4 +18,8 @@ set(CMAKE_TOOLCHAIN_FILE "${VCPKG}/scripts/buildsystems/vcpkg.cmake")
 
 project(tvm VERSION 0.0.1)
 
+# Don't mess with output names. No weird prefixes, please!
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+set(CMAKE_STATIC_LIBRARY_PREFIX "")
+
 add_subdirectory(libtvm)
