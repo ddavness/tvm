@@ -16,10 +16,26 @@ endif()
 message( STATUS "Found vcpkg at ${VCPKG}" )
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG}/scripts/buildsystems/vcpkg.cmake")
 
+# Turing Virtual Machine
 project(tvm VERSION 0.0.1)
 
 # Don't mess with output names. No weird prefixes, please!
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 set(CMAKE_STATIC_LIBRARY_PREFIX "")
+
+# Set the C++ standard. We'll be using C++17 as it's the most recent standard (while still being stable)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Make the compiler harsher on errors
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -Werror -pedantic)
+endif()
+
+# Make header files available for all the projects in this repo
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
 add_subdirectory(libtvm)
