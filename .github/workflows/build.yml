@@ -1,16 +1,40 @@
-name: code
+name: Build and Unit Tests
 on: [push, pull_request]
 jobs:
   build:
     strategy:
       matrix:
         plat: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - plat: ubuntu-latest
+            triplet: x64-linux
+            csharp: mono
+          - plat: windows-latest
+            triplet: x64-windows
+            mono: ''
+          - plat: macos-latest
+            triplet: x64-osx
+            csharp: mono
     runs-on: ${{ matrix.plat }}
+    env:
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: recursive
+      - name: Setup NuGet credentials for vcpkg binary-caching
+        shell: bash
+        run: >
+          ${{ matrix.mono }} `vcpkg fetch nuget | tail -n 1`
+          sources add
+          -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          -storepasswordincleartext
+          -name "GitHub"
+          -username "${{ github.repository_owner }}"
+          -password "${{ secrets.GITHUB_TOKEN }}"
+        
       - name: Run CMake generator
-        run: cmake . -B bin -DCMAKE_BUILD_TYPE=MinSizeRel
+        run: cmake . -B bin -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
       - name: Build project
-        run: cmake --build bin --config MinSizeRel
+        run: cmake --build bin --config Debug

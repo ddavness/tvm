@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.13.0) # Version distributed by Debian Buster (10.x, stable)
 
+# Place everything in one place so that shared libraries are easily obtained
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
 # We'll be using vcpkg to get any libraries we may need
 # Look for either VCPKG_INSTALLATION_ROOT or VCPKG_ROOT or VCPKG env variables
 if(EXISTS $ENV{VCPKG})
@@ -39,3 +43,9 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
 add_subdirectory(libtvm)
+
+option(BUILD_TESTS "Also compile test executables" OFF)
+if(BUILD_TESTS)
+    message(STATUS "Adding the tests to be built.")
+    add_subdirectory(tvm.spec)
+endif()

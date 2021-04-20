@@ -1,0 +1,12 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+    "name": "tvm",
+    "version": "0.0.1",
+    "description": [
+        "The Turing Virtual Machine project.",
+        "Aims to be a fast turing machine simulator, aimed for Computer Science students/lecturers"
+    ],
+    "dependencies": [
+        "catch2"
+    ]
+}
