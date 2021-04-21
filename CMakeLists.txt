@@ -1,8 +1,18 @@
 cmake_minimum_required(VERSION 3.13.0) # Version distributed by Debian Buster (10.x, stable)
 
 # Place everything in one place so that shared libraries are easily obtained
-set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Don't discriminate by build type - that makes our output folders less consistent cross-platform-wise
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 # We'll be using vcpkg to get any libraries we may need
 # Look for either VCPKG_INSTALLATION_ROOT or VCPKG_ROOT or VCPKG env variables
@@ -46,6 +56,6 @@ add_subdirectory(libtvm)
 
 option(BUILD_TESTS "Also compile test executables" OFF)
 if(BUILD_TESTS)
-    message(STATUS "Adding the tests to be built.")
+    message(STATUS "[BUILD_TESTS] Adding the tests to the build pipeline.")
     add_subdirectory(tvm.spec)
 endif()

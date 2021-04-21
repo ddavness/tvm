@@ -11,12 +11,13 @@ jobs:
             csharp: mono
           - plat: windows-latest
             triplet: x64-windows
-            mono: ''
+            csharp: ''
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
     runs-on: ${{ matrix.plat }}
     env:
+      VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
     steps:
       - name: Checkout Repository
@@ -26,7 +27,7 @@ jobs:
       - name: Setup NuGet credentials for vcpkg binary-caching
         shell: bash
         run: >
-          ${{ matrix.mono }} `vcpkg fetch nuget | tail -n 1`
+          ${{ matrix.csharp }} `vcpkg fetch nuget | tail -n 1`
           sources add
           -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
           -storepasswordincleartext
@@ -38,3 +39,5 @@ jobs:
         run: cmake . -B bin -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
       - name: Build project
         run: cmake --build bin --config Debug
+      - name: Run unit tests
+        run: bin/bin/tvm_spec
