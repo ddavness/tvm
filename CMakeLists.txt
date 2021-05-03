@@ -42,9 +42,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Make the compiler harsher on errors
+# Compiler-specific options
 if(MSVC)
     add_compile_options(/W4 /WX)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 else()
     add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
@@ -58,4 +59,9 @@ option(BUILD_TESTS "Also compile test executables" OFF)
 if(BUILD_TESTS)
     message(STATUS "[BUILD_TESTS] Adding the tests to the build pipeline.")
     add_subdirectory(tvm.spec)
+endif()
+
+option(CLANG_TIDY "Create a clang-tidy target" OFF)
+if (CLANG_TIDY)
+
 endif()

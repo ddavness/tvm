@@ -1,5 +1,4 @@
 #pragma once
-#include "win32-dll.h"
 
 #include <string>
 
@@ -7,10 +6,9 @@
 #define TVM_VERSION_MINOR @tvm_VERSION_MINOR@
 #define TVM_VERSION_PATCH @tvm_VERSION_PATCH@
 
-namespace tvm
-{
-    PUB int16_t version_major();
-    PUB int16_t version_minor();
-    PUB int16_t version_patch();
-    PUB std::string version();
+namespace tvm {
+    int16_t version_major();
+    int16_t version_minor();
+    int16_t version_patch();
+    std::string version();
 } // namespace tvm
