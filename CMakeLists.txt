@@ -60,8 +60,3 @@ if(BUILD_TESTS)
     message(STATUS "[BUILD_TESTS] Adding the tests to the build pipeline.")
     add_subdirectory(tvm.spec)
 endif()
-
-option(CLANG_TIDY "Create a clang-tidy target" OFF)
-if (CLANG_TIDY)
-
-endif()

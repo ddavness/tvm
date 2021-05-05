@@ -1,0 +1,31 @@
+name: Code Analysis
+on: [push, pull_request]
+jobs:
+  clang-format-tidy:
+    runs-on: ubuntu-latest
+    env:
+      VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
+      VCPKG_DEFAULT_TRIPLET: x64-linux
+      FILES: libtvm/*.cpp libtvm/*.hpp*
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Setup NuGet credentials for vcpkg binary-caching
+        shell: bash
+        run: >
+          mono `vcpkg fetch nuget | tail -n 1`
+          sources add
+          -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          -storepasswordincleartext
+          -name "GitHub"
+          -username "${{ github.repository_owner }}"
+          -password "${{ secrets.GITHUB_TOKEN }}"
+      - name: Run CMake generator
+        run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      - name: Run clang-format
+        run: clang-format ${FILES} --dry-run -Werror
+        continue-on-error: true
+      - name: Run clang-tidy
+        run: clang-tidy ${FILES} -p build --warnings-as-errors=*
