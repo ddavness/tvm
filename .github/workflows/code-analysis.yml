@@ -22,18 +22,18 @@ jobs:
           -name "GitHub"
           -username "${{ github.repository_owner }}"
           -password "${{ secrets.GITHUB_TOKEN }}"
-      - name: Install clang tools
+      - name: Install and update clang tools
         shell: bash
         run: |
           curl "https://apt.llvm.org/llvm.sh" > /tmp/llvm.sh
           sudo bash /tmp/llvm.sh 12
           sudo apt-get install -y clang-format-12 clang-tidy-12
-          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-12 100
-          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 100
+          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-12 200
+          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 200
       - name: Run CMake generator
         run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       - name: Run clang-format
-        run: clang-format ${FILES} --dry-run -Werror
+        run: clang-format ${FILES} --dry-run -Werror --style=file
         continue-on-error: true
       - name: Run clang-tidy
         run: clang-tidy ${FILES} -p build --warnings-as-errors=*
