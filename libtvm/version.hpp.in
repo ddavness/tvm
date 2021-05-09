@@ -2,9 +2,11 @@
 
 #include <string>
 
-#define TVM_VERSION_MAJOR @tvm_VERSION_MAJOR@
-#define TVM_VERSION_MINOR @tvm_VERSION_MINOR@
-#define TVM_VERSION_PATCH @tvm_VERSION_PATCH@
+// clang-format off
+#define TVM_VERSION_MAJOR @tvm_VERSION_MAJOR@ // NOLINT cppcoreguidelines-macro-usage
+#define TVM_VERSION_MINOR @tvm_VERSION_MINOR@ // NOLINT cppcoreguidelines-macro-usage
+#define TVM_VERSION_PATCH @tvm_VERSION_PATCH@ // NOLINT cppcoreguidelines-macro-usage
+// clang-format on
 
 namespace tvm {
     int16_t version_major();
