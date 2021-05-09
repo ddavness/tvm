@@ -1,7 +1,7 @@
-#include <string>
-#include <catch2/catch.hpp>
-
 #include "libtvm/version.hpp"
+
+#include <catch2/catch.hpp>
+#include <string>
 
 using std::string;
 
