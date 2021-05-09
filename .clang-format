@@ -88,4 +88,4 @@ SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Auto
-UseCRLF: true
+UseCRLF: false
