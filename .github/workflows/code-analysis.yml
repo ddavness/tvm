@@ -7,6 +7,7 @@ jobs:
       VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: x64-linux
       FILES: libtvm/*.cpp libtvm/*.hpp*
+      FILES_ALL: tvm.spec/*.spec.cpp
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -33,7 +34,7 @@ jobs:
       - name: Run CMake generator
         run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       - name: Run clang-format
-        run: clang-format ${FILES} --dry-run -Werror --style=file
+        run: clang-format ${FILES} ${FILES_ALL} --dry-run -Werror --style=file
         continue-on-error: true
       - name: Run clang-tidy
         run: clang-tidy ${FILES} -p build --warnings-as-errors=*
