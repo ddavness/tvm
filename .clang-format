@@ -45,14 +45,16 @@ EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^"win32-dll.h"$'
-    Priority: 0
-    SortPriority: 0
   - Regex: '^".*"$'
     Priority: 1
-  - Regex: '.*'
+  - Regex: '^<.*(\/.*)+>$'
+    Priority: 2
+    SortPriority: 1
+  - Regex: '^<.*>$'
     Priority: 2
     SortPriority: 2
+  - Regex: '.*'
+    Priority: 256
 IncludeIsMainRegex: (\.spec)?$
 IndentCaseBlocks: false
 IndentCaseLabels: true
