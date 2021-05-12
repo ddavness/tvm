@@ -9,8 +9,31 @@
 // clang-format on
 
 namespace tvm {
+    /**
+     * @returns The major part of the version of the library (X._._)
+     */
     int16_t version_major();
+
+    /**
+     * @returns The minor part of the version of the library (_.X._)
+     */
     int16_t version_minor();
+
+    /**
+     * @returns The patch number of the version of the library (_._.X)
+     */
     int16_t version_patch();
+
+    /**
+     * @returns A string containing the version number of the
+     * library in the standard format (MAJOR.MINOR.PATCH)
+     */
     std::string version();
+
+    /**
+     * @returns The unicode version this library supports.
+     * Generally tied to the version of ICU that tvmlib was
+     * linked against.
+     */
+    std::string unicode_version();
 } // namespace tvm

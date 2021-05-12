@@ -50,6 +50,10 @@ else()
     add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
 
+# Export the vcpkg include
+find_path(VCPKG_INCLUDE include)
+include_directories(${VCPKG_INCLUDE}/include)
+
 # Make header files available for all the projects in this repo
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 

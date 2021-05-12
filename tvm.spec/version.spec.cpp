@@ -1,6 +1,7 @@
 #include "libtvm/version.hpp"
 
 #include <catch2/catch.hpp>
+#include <unicode/uchar.h>
 #include <string>
 
 using std::string;
@@ -22,6 +23,13 @@ SCENARIO("Versions are outputted correctly", "[version]") {
 
         THEN("It is equal to the current version as in the CMake file") {
             REQUIRE(v == "0.0.1");
+        }
+    }
+    WHEN("The unicode version is requested") {
+        string uv = tvm::unicode_version();
+
+        THEN("It is equal to the version macro given by ICU") {
+            REQUIRE(uv == U_UNICODE_VERSION);
         }
     }
 }
