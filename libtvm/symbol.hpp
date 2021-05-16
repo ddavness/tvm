@@ -13,7 +13,7 @@
 namespace tvm {
     class symbol {
       private:
-        static const std::map<UChar, int32_t> literals;
+        static const std::map<UChar32, int32_t> literals;
         const int32_t index;
 
       public:
@@ -23,14 +23,16 @@ namespace tvm {
         symbol();
 
         /**
-         * Creates a symbol using the given literal
+         * Creates a symbol using the given character (UTF-16 or UTF-32)
          */
         symbol(UChar l);
+        symbol(UChar32 l);
 
         /**
          * Whether two symbols are equal
          */
         bool operator==(const tvm::symbol&) const;
+        bool operator!=(const tvm::symbol&) const;
 
         /**
          * Whether the symbol is blank
