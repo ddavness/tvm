@@ -44,7 +44,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Compiler-specific options
 if(MSVC)
-    add_compile_options(/W4 /WX)
+    add_compile_options(/W4 /WX /source-charset:utf-8)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 else()
     add_compile_options(-Wall -Wextra -Werror -pedantic)
