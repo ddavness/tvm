@@ -25,8 +25,8 @@ namespace tvm {
         /**
          * Creates a symbol using the given character (UTF-16 or UTF-32)
          */
-        symbol(UChar l);
-        symbol(UChar32 l);
+        symbol(UChar);
+        symbol(UChar32);
 
         /**
          * Whether two symbols are equal
