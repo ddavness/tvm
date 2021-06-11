@@ -32,7 +32,7 @@ namespace tvm {
 
     /**
      * @returns The unicode version this library supports.
-     * Generally tied to the version of ICU that tvmlib was
+     * Generally tied to the version of ICU that libtvm was
      * linked against.
      */
     std::string unicode_version();
