@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "libtvm/version.hpp"
-
 #include <unicode/uchar.h>
 #include <map>
 #include <ostream>
