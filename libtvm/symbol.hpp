@@ -13,7 +13,6 @@
 namespace tvm {
     class symbol {
       private:
-        static const std::map<UChar32, int32_t> literals;
         const int32_t index;
 
       public:
@@ -42,6 +41,8 @@ namespace tvm {
         /**
          * Outputs the symbol into the given stream (e.g. cout)
          */
-        std::ostream& operator<<(std::ostream&) const;
+        friend std::ostream& operator<<(std::ostream&, const tvm::symbol&);
     };
+
+    std::ostream& operator<<(std::ostream&, const tvm::symbol&);
 } // namespace tvm

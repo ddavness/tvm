@@ -2,6 +2,7 @@
 
 #include <doctest/doctest.h>
 #include <unicode/unistr.h>
+#include <iostream>
 #include <string>
 
 using std::string;
