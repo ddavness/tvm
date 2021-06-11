@@ -1,6 +1,6 @@
 #include "libtvm/version.hpp"
 
-#include <catch2/catch.hpp>
+#include <doctest/doctest.h>
 #include <unicode/uchar.h>
 #include <string>
 
@@ -9,30 +9,20 @@
 
 using std::string;
 
-SCENARIO("Versions are outputted correctly", "[version]") {
-    WHEN("Each version component is requested") {
+TEST_SUITE("Library versioning") {
+    TEST_CASE("Version components are equal to those specified in the CMake file") {
         int16_t M = tvm::version_major();
         int16_t m = tvm::version_minor();
         int16_t p = tvm::version_patch();
 
-        THEN("It is equal to the current version as in the CMake file") {
-            REQUIRE(M == TVM_VERSION_MAJOR);
-            REQUIRE(m == TVM_VERSION_MINOR);
-            REQUIRE(p == TVM_VERSION_PATCH);
-        }
+        CHECK(M == TVM_VERSION_MAJOR);
+        CHECK(m == TVM_VERSION_MINOR);
+        CHECK(p == TVM_VERSION_PATCH);
     }
-    WHEN("The version string is requested") {
-        string v = tvm::version();
-
-        THEN("It is equal to the current version as in the CMake file") {
-            REQUIRE(v == (MSTR(TVM_VERSION_MAJOR) "." MSTR(TVM_VERSION_MINOR) "." MSTR(TVM_VERSION_PATCH)));
-        }
+    TEST_CASE("The version string is equal to the one specified in the CMake file") {
+        CHECK(tvm::version() == (MSTR(TVM_VERSION_MAJOR) "." MSTR(TVM_VERSION_MINOR) "." MSTR(TVM_VERSION_PATCH)));
     }
-    WHEN("The unicode version is requested") {
-        string uv = tvm::unicode_version();
-
-        THEN("It is equal to the version macro given by ICU") {
-            REQUIRE(uv == U_UNICODE_VERSION);
-        }
+    TEST_CASE("Unicode version is equal to the one exported by ICU") {
+        CHECK(tvm::unicode_version() == U_UNICODE_VERSION);
     }
 }
