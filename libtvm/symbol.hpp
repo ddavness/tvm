@@ -11,7 +11,7 @@
 namespace tvm {
     class symbol {
       private:
-        const int32_t index;
+        int32_t index;
 
       public:
         /**
