@@ -26,8 +26,8 @@ using tvm::tape_transition;
 tape::tape(): needle(0) {
     contents.emplace_back(symbol());
 }
-template<typename SequentialContainer> tape::tape(const SequentialContainer& symbols): tape(symbols, 0) {}
-template<typename SequentialContainer> tape::tape(const SequentialContainer& symbols, uint64_t n): needle(n) {
+template<typename SequenceContainer> tape::tape(const SequenceContainer& symbols): tape(symbols, 0) {}
+template<typename SequenceContainer> tape::tape(const SequenceContainer& symbols, uint64_t n): needle(n) {
     for (symbol s: symbols) {
         contents.emplace_back(s);
     }

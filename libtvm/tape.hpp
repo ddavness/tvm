@@ -29,7 +29,7 @@ namespace tvm {
          *
          * @returns A tape built from the given symbol set.
          */
-        template<typename SequentialContainer> tape(const SequentialContainer&);
+        template<typename SequenceContainer> tape(const SequenceContainer&);
 
         /**
          * Builds a tape from the given symbol container.
@@ -37,7 +37,7 @@ namespace tvm {
          *
          * @returns A tape built from the given symbol set.
          */
-        template<typename SequentialContainer> tape(const SequentialContainer&, uint64_t);
+        template<typename SequenceContainer> tape(const SequenceContainer&, uint64_t);
 
         /**
          * Reads the symbol stored in the tape in the current position.
