@@ -5,9 +5,6 @@
 #include <iostream>
 #include <string>
 
-using std::string;
-using namespace std::string_literals;
-
 TEST_SUITE("Manipulating symbols") {
     const UChar blank = '_';
 
