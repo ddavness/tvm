@@ -25,19 +25,13 @@ namespace tvm {
         tape();
 
         /**
-         * Builds a tape from the given symbol container. The needle will be set at the start.
-         *
-         * @returns A tape built from the given symbol set.
-         */
-        template<typename SequenceContainer> tape(const SequenceContainer&);
-
-        /**
          * Builds a tape from the given symbol container.
-         * The needle will be set at the position defined on the second parameter.
+         * The needle will be set at the position defined on the second parameter, if defined.
+         * Otherwise it will be set at the start of the container.
          *
          * @returns A tape built from the given symbol set.
          */
-        template<typename SequenceContainer> tape(const SequenceContainer&, uint64_t);
+        template<typename SequenceContainer> tape(const SequenceContainer&, uint64_t = 0);
 
         /**
          * Reads the symbol stored in the tape in the current position.

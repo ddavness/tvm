@@ -17,6 +17,7 @@
 */
 
 #include "libtvm/tape.hpp"
+#include <concepts>
 
 using tvm::symbol;
 using tvm::tape;
@@ -26,7 +27,6 @@ using tvm::tape_transition;
 tape::tape(): needle(0) {
     contents.emplace_back(symbol());
 }
-template<typename SequenceContainer> tape::tape(const SequenceContainer& symbols): tape::tape(symbols, 0) {}
 template<typename SequenceContainer> tape::tape(const SequenceContainer& symbols, uint64_t n): needle(n) {
     for (symbol s: symbols) {
         contents.emplace_back(s);
