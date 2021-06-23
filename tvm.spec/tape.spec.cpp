@@ -20,13 +20,31 @@ TEST_SUITE("Manipulating tapes") {
         CHECK(!t.read());
     }
 
-    TEST_CASE("Building tapes from a container") {
-        std::vector<symbol> a {symbol('x'),
-            symbol('y'),
-            symbol(static_cast<UChar32>(U'💻')),
-            symbol('_'),
-            symbol(static_cast<UChar32>(U'💻'))};
+    const std::vector<symbol> container {symbol('x'),
+        symbol('y'),
+        symbol(static_cast<UChar32>(U'💻')),
+        symbol('_'),
+        symbol(static_cast<UChar32>(U'💻'))};
 
-        tvm::tape t(a);
+    TEST_CASE("Tapes can be created from a container") {
+        tvm::tape t(container);
+
+        CHECK(t.read() == container.at(0));
+        t.move(tvm::tape_transition::LEFT);
+        CHECK(!t.read());
+        t.move(tvm::tape_transition::RIGHT);
+        CHECK(t.read() == container.at(0));
+        t.move(tvm::tape_transition::RIGHT);
+        CHECK(t.read() == container.at(1));
+    }
+
+    TEST_CASE("The needle position can be set when creating a tape") {
+        tvm::tape t(container, 4);
+
+        CHECK(t.read() == container.at(4));
+        t.move(tvm::tape_transition::LEFT);
+        CHECK(t.read() == container.at(3));
+        t.move(tvm::tape_transition::LEFT);
+        CHECK(t.read() == container.at(4));
     }
 }
