@@ -4,10 +4,6 @@
 
 #include <doctest/doctest.h>
 #include <unicode/unistr.h>
-#include <array>
-#include <deque>
-#include <forward_list>
-#include <list>
 #include <vector>
 
 using tvm::symbol;
@@ -24,7 +20,7 @@ TEST_SUITE("Manipulating tapes") {
         CHECK(!t.read());
     }
 
-    TEST_CASE("Tape constructors accept any sequential container from STL") {
+    TEST_CASE("Building tapes from a container") {
         std::vector<symbol> a {symbol('x'),
             symbol('y'),
             symbol(static_cast<UChar32>(U'💻')),

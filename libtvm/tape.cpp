@@ -17,8 +17,10 @@
 */
 
 #include "libtvm/tape.hpp"
-#include <concepts>
 
+#include <vector>
+
+using std::vector;
 using tvm::symbol;
 using tvm::tape;
 using tvm::tape_transition;
@@ -27,7 +29,7 @@ using tvm::tape_transition;
 tape::tape(): needle(0) {
     contents.emplace_back(symbol());
 }
-template<typename SequenceContainer> tape::tape(const SequenceContainer& symbols, uint64_t n): needle(n) {
+tape::tape(const vector<symbol>& symbols, uint64_t n): needle(n) {
     for (symbol s: symbols) {
         contents.emplace_back(s);
     }

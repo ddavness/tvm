@@ -9,6 +9,7 @@
 #include "libtvm/symbol.hpp"
 
 #include <deque>
+#include <vector>
 
 namespace tvm {
     enum class tape_transition : int8_t { LEFT = -1, STAY = 0, RIGHT = 1 };
@@ -31,7 +32,7 @@ namespace tvm {
          *
          * @returns A tape built from the given symbol set.
          */
-        template<typename SequenceContainer> tape(const SequenceContainer&, uint64_t = 0);
+        tape(const std::vector<tvm::symbol>&, uint64_t = 0);
 
         /**
          * Reads the symbol stored in the tape in the current position.
