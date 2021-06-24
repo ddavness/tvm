@@ -16,6 +16,9 @@ namespace tvm {
 
     class tape {
       private:
+        void left();
+        void right();
+
         std::deque<tvm::symbol> contents;
         uint64_t needle;
 

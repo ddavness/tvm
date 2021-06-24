@@ -45,13 +45,42 @@ void tape::write(const symbol& sym) {
 
 void tape::move(tape_transition t) {
     switch (t) {
-        case tape_transition::RIGHT:
-            needle++;
-            break;
         case tape_transition::LEFT:
-            needle--;
+            left();
+            break;
+        case tape_transition::RIGHT:
+            right();
             break;
         case tape_transition::STAY:
             break;
+    }
+}
+
+void tape::left() {
+    // We are pointing to the rightmost symbol being represented, and that symbol is blank.
+    // As such, we're removing it to save memory.
+    if (needle + 1 == contents.size() && !contents.at(needle)) {
+        contents.pop_back();
+    }
+
+    // Already at the leftmost of the deque, just add a blank symbol at the start of said deque
+    if (!needle--) {
+        needle++; // cannot go below zero
+        contents.emplace_front(symbol());
+        return;
+    }
+}
+
+void tape::right() {
+    // We are pointing to the leftmost symbol being represented, and that symbol is blank.
+    // As such, we're removing it to save memory.
+    if (!needle && !contents.at(needle)) {
+        needle--; // one less element in the deque (needle being -1 will be addressed later)
+        contents.pop_front();
+    }
+
+    // Already at the rightmost of the deque, just add a blank symbol at the end of said deque
+    if (++needle == contents.size()) {
+        contents.emplace_back(symbol());
     }
 }
