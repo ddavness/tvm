@@ -47,4 +47,21 @@ TEST_SUITE("Manipulating tapes") {
         t.move(tvm::tape_transition::LEFT);
         CHECK(t.read() == container.at(4));
     }
+
+    TEST_CASE("After moving the needle with the STAY transition, the symbol read is the same") {
+        const symbol s('@');
+        tvm::tape t({s});
+
+        CHECK(t.read() == s);
+        t.move(tvm::tape_transition::STAY);
+        CHECK(t.read() == s);
+    }
+
+    TEST_CASE("Write a symbol, then read it") {
+        tvm::tape t;
+        symbol s('$');
+
+        t.write(s);
+        CHECK(t.read() == s);
+    }
 }
