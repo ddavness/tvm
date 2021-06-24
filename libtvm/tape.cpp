@@ -64,7 +64,7 @@ void tape::left() {
     }
 
     // Already at the leftmost of the deque, just add a blank symbol at the start of said deque
-    if (!needle--) {
+    if (needle-- == 0) {
         needle++; // cannot go below zero
         contents.emplace_front(symbol());
         return;
@@ -74,7 +74,7 @@ void tape::left() {
 void tape::right() {
     // We are pointing to the leftmost symbol being represented, and that symbol is blank.
     // As such, we're removing it to save memory.
-    if (!needle && !contents.at(needle)) {
+    if (needle == 0 && !contents.at(needle)) {
         needle--; // one less element in the deque (needle being -1 will be addressed later)
         contents.pop_front();
     }
