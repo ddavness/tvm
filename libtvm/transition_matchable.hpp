@@ -14,6 +14,6 @@ namespace tvm {
 
       protected:
         transition_matchable(int32_t);
-        int32_t index() const;
+        [[nodiscard]] int32_t index() const;
     };
 } // namespace tvm
