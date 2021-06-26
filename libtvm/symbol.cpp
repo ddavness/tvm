@@ -11,6 +11,8 @@
 
 #include "libtvm/symbol.hpp"
 
+#include "libtvm/transition_matchable.hpp"
+
 #include <unicode/unistr.h>
 #include <string>
 
@@ -21,27 +23,27 @@ using std::string;
 using tvm::symbol;
 
 // Public constructors
-symbol::symbol(): index(0) {}
-symbol::symbol(UChar c): index(c == BLANK_SYMBOL ? 0 : c) {}
-symbol::symbol(UChar32 c): index(c == BLANK_SYMBOL ? 0 : c) {}
+symbol::symbol(): tvm::transition_matchable(0) {}
+symbol::symbol(UChar c): tvm::transition_matchable(c == BLANK_SYMBOL ? 0 : c) {}
+symbol::symbol(UChar32 c): tvm::transition_matchable(c == BLANK_SYMBOL ? 0 : c) {}
 
 bool symbol::operator==(const symbol& other) const {
-    return index == other.index;
+    return index() == other.index();
 }
 bool symbol::operator!=(const symbol& other) const {
-    return index != other.index;
+    return index() != other.index();
 }
 
 bool symbol::operator!() const {
-    return index == 0;
+    return index() == 0;
 }
 
 ostream& tvm::operator<<(ostream& to, const symbol& me) {
     string t;
-    if (me.index == 0) {
+    if (me.index() == 0) {
         to << icu::UnicodeString(BLANK_SYMBOL).toUTF8String(t);
     } else {
-        to << icu::UnicodeString(me.index).toUTF8String(t);
+        to << icu::UnicodeString(me.index()).toUTF8String(t);
     }
 
     return to;

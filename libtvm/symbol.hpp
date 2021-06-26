@@ -4,15 +4,14 @@
 
 #pragma once
 
+#include "libtvm/transition_matchable.hpp"
+
 #include <unicode/uchar.h>
 #include <map>
 #include <ostream>
 
 namespace tvm {
-    class symbol {
-      private:
-        int32_t index;
-
+    class symbol: public tvm::transition_matchable {
       public:
         /**
          * Creates a new blank symbol.
