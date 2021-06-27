@@ -34,6 +34,13 @@ bool symbol::operator!=(const symbol& other) const {
     return index() != other.index();
 }
 
+bool symbol::match(const symbol& s) const {
+    return index() == s.index();
+}
+bool symbol::match(const transition_matchable& s) const {
+    return s.match(*this);
+}
+
 bool symbol::operator!() const {
     return index() == 0;
 }

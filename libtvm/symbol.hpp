@@ -31,6 +31,12 @@ namespace tvm {
         bool operator!=(const tvm::symbol&) const;
 
         /**
+         * Attempt to match with another transition-matchable.
+         */
+        bool match(const tvm::transition_matchable&) const;
+        bool match(const tvm::symbol&) const;
+
+        /**
          * Whether the symbol is blank
          */
         bool operator!() const;

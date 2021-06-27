@@ -15,5 +15,8 @@ namespace tvm {
       protected:
         transition_matchable(int32_t);
         [[nodiscard]] int32_t index() const;
+
+      public:
+        virtual bool match(const tvm::transition_matchable&) const = 0;
     };
 } // namespace tvm
