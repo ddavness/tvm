@@ -90,4 +90,22 @@ TEST_SUITE("Manipulating symbols") {
             }
         }
     }
+
+    TEST_CASE("Symbol matching") {
+        tvm::symbol s0;
+        tvm::symbol s1(ascii);
+        tvm::symbol s2(emoji);
+
+        SUBCASE("Symbols match with themselves") {
+            CHECK(s0.match(s0));
+            CHECK(s1.match(s1));
+            CHECK(s2.match(s2));
+        }
+
+        SUBCASE("Symbols do not match with different symbols") {
+            CHECK(!s0.match(s1));
+            CHECK(!s1.match(s2));
+            CHECK(!s2.match(s0));
+        }
+    }
 }
