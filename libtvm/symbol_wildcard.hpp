@@ -30,7 +30,7 @@ namespace tvm {
         /**
          * Attempt to match with another transition-matchable.
          */
-        bool match(const tvm::transition_matchable&) const;
+        [[nodiscard]] bool match(const tvm::transition_matchable&) const override;
     };
 
     std::ostream& operator<<(std::ostream&, const tvm::symbol_wildcard&);
