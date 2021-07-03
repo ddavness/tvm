@@ -9,7 +9,7 @@
 #include <ostream>
 
 namespace tvm {
-    class symbol_wildcard: public tvm::transition_matchable {
+    class symbol_wildcard final: public tvm::transition_matchable {
       public:
         /**
          * Creates a wildcard symbol. Will always match with a matchable.

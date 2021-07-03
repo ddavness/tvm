@@ -11,7 +11,7 @@
 #include <ostream>
 
 namespace tvm {
-    class symbol: public tvm::transition_matchable {
+    class symbol final: public tvm::transition_matchable {
       public:
         /**
          * Creates a new blank symbol.
