@@ -20,12 +20,15 @@ const UChar32 BLANK_SYMBOL = '_';
 
 using std::ostream;
 using std::string;
+
 using tvm::symbol;
+using tvm::transition_matchable;
 
 // Public constructors
 symbol::symbol(): tvm::transition_matchable(0) {}
 symbol::symbol(UChar c): tvm::transition_matchable(c == BLANK_SYMBOL ? 0 : c) {}
 symbol::symbol(UChar32 c): tvm::transition_matchable(c == BLANK_SYMBOL ? 0 : c) {}
+symbol::symbol(const transition_matchable& t): tvm::transition_matchable(t.index()) {}
 
 bool symbol::operator==(const symbol& other) const {
     return index() == other.index();

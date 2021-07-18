@@ -25,6 +25,11 @@ namespace tvm {
         symbol(UChar32);
 
         /**
+         * Upgrades an already existing transition_matchable into a symbol
+         */
+        symbol(const tvm::transition_matchable&);
+
+        /**
          * Whether two symbols are equal
          */
         bool operator==(const tvm::symbol&) const;
