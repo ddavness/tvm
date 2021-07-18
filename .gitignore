@@ -1,2 +1,5 @@
 # The build folder
 build
+
+# Clangd cache
+.cache
