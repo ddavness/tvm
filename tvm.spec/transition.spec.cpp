@@ -75,4 +75,14 @@ TEST_SUITE("State transitions") {
         CHECK(u1.read() == x);
         CHECK(u2.read() == x);
     }
+
+    TEST_CASE("Wildcard writing") {
+        transition t({wc}, {wc}, {tape_transition::RIGHT});
+        tape tt({x, y});
+
+        CHECK(t.match_and_run({tt}));
+        CHECK(tt.read() == y);
+        tt.move(tape_transition::LEFT);
+        CHECK(tt.read() == x);
+    }
 }
