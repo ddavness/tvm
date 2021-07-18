@@ -1,6 +1,6 @@
 # project(tvm.spec)
 
-add_executable(tvm_spec tvm.spec.cpp version.spec.cpp symbol.spec.cpp symbol_wildcard.spec.cpp tape.spec.cpp)
+add_executable(tvm_spec tvm.spec.cpp version.spec.cpp symbol.spec.cpp symbol_wildcard.spec.cpp tape.spec.cpp transition.spec.cpp)
 
 find_package(doctest REQUIRED)
 

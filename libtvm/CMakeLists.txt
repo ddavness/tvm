@@ -1,6 +1,6 @@
 # project(tvm)
 
-add_library(libtvm SHARED version.cpp transition_matchable.cpp symbol.cpp symbol_wildcard.cpp tape.cpp)
+add_library(libtvm SHARED version.cpp transition_matchable.cpp symbol.cpp symbol_wildcard.cpp tape.cpp transition.cpp)
 add_compile_definitions(__LIBTVM)
 
 configure_file(version.hpp.in version.hpp)
