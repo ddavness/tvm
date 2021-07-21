@@ -24,65 +24,62 @@ TEST_SUITE("State transitions") {
 
     TEST_CASE("Transitions with one tape") {
         transition t({y}, {z}, {tape_transition::STAY});
-        tape t1({x});
-        tape t2({y});
+        vector<tape> t1({tape({x})});
+        vector<tape> t2({tape({y})});
 
         CHECK(!t.match_and_run({t1}));
-        CHECK(t1.read() == x);
+        CHECK(t1.at(0).read() == x);
 
         CHECK(t.match_and_run({t2}));
-        CHECK(t2.read() == z);
+        CHECK(t2.at(0).read() == z);
     }
 
     TEST_CASE("Transitions matching more than one tape") {
         transition t({x, y, y}, {z, z, z}, {tape_transition::STAY, tape_transition::STAY, tape_transition::STAY});
-        tape t1({x});
-        tape t2({y});
-        tape t3({y});
+        vector<tape> tt({tape({x}), tape({y}), tape({y})});
 
-        CHECK(t.match_and_run({t1, t2, t3}));
+        CHECK(t.match_and_run(tt));
 
-        CHECK(t1.read() == z);
-        CHECK(t2.read() == z);
-        CHECK(t3.read() == z);
+        CHECK(tt.at(0).read() == z);
+        CHECK(tt.at(1).read() == z);
+        CHECK(tt.at(2).read() == z);
     }
 
     TEST_CASE("Transitons do not run if not all tapes match") {
         transition t({x, y, z}, {z, x, y}, {tape_transition::LEFT, tape_transition::RIGHT, tape_transition::LEFT});
+        vector<tape> tt({tape({x}), tape({y}), tape({y})});
         tape t1({x});
         tape t2({y});
         tape t3({y});
 
-        CHECK(!t.match_and_run({t1, t2, t3}));
+        CHECK(!t.match_and_run(tt));
 
-        CHECK(t1.read() == x);
-        CHECK(t2.read() == y);
-        CHECK(t3.read() == y);
+        CHECK(tt.at(0).read() == x);
+        CHECK(tt.at(1).read() == y);
+        CHECK(tt.at(2).read() == y);
     }
 
     TEST_CASE("Wildcards will match with anything") {
         transition t({wc, wc}, {x, x}, {tape_transition::STAY, tape_transition::STAY});
-        tape t1({z});
-        tape t2({x});
-        tape u1({y});
-        tape u2({y});
+        vector<tape> tt({tape({z}), tape({x})});
+        vector<tape> uu({tape({y}), tape({y})});
 
-        CHECK(t.match_and_run({t1, t2}));
-        CHECK(t1.read() == x);
-        CHECK(t2.read() == x);
+        CHECK(t.match_and_run(tt));
+        CHECK(tt.at(0).read() == x);
+        CHECK(tt.at(1).read() == x);
 
-        CHECK(t.match_and_run({u1, u2}));
-        CHECK(u1.read() == x);
-        CHECK(u2.read() == x);
+        CHECK(t.match_and_run(uu));
+        CHECK(uu.at(0).read() == x);
+        CHECK(uu.at(1).read() == x);
     }
 
     TEST_CASE("Wildcard writing") {
         transition t({wc}, {wc}, {tape_transition::RIGHT});
-        tape tt({x, y});
+        vector<tape> tt({tape({x, y})});
 
-        CHECK(t.match_and_run({tt}));
-        CHECK(tt.read() == y);
-        tt.move(tape_transition::LEFT);
-        CHECK(tt.read() == x);
+        CHECK(t.match_and_run(tt));
+        CHECK(tt.at(0).read() == y);
+        tt.at(0).move(tape_transition::LEFT);
+        CHECK(tt.at(0).read() == x);
     }
 }

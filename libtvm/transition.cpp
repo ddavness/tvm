@@ -16,6 +16,7 @@
 #include "libtvm/transition_matchable.hpp"
 
 #include <functional>
+#include <iostream>
 #include <tuple>
 #include <vector>
 
@@ -45,7 +46,7 @@ transition::transition(const vector<ref<const transition_matchable>>& read,
     }
 }
 
-bool transition::match_and_run(vector<tape> tapes) const {
+bool transition::match_and_run(vector<tape>& tapes) const {
     // TODO: Vector length checks
 
     for (auto [t, m] = tuple {tapes.begin(), expect.begin()}; t != tapes.end(); ++t, ++m) {

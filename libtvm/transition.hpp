@@ -22,6 +22,6 @@ namespace tvm {
             const std::vector<std::reference_wrapper<const tvm::transition_matchable>>&,
             const std::vector<tvm::tape_transition>&);
 
-        [[nodiscard]] bool match_and_run(std::vector<tvm::tape>) const;
+        [[nodiscard]] bool match_and_run(std::vector<tvm::tape>&) const;
     };
 } // namespace tvm
