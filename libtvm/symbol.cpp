@@ -37,11 +37,14 @@ bool symbol::operator!=(const symbol& other) const {
     return index() != other.index();
 }
 
+bool symbol::omatch(const transition_matchable& s) const {
+    return index() == s.index();
+}
 bool symbol::match(const symbol& s) const {
     return index() == s.index();
 }
 bool symbol::match(const transition_matchable& s) const {
-    return s.match(*this);
+    return (index() == symbol(s).index()) ? true : s.omatch(*this);
 }
 
 bool symbol::operator!() const {

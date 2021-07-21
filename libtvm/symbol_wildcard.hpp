@@ -10,6 +10,9 @@
 
 namespace tvm {
     class symbol_wildcard final: public tvm::transition_matchable {
+      private:
+        [[nodiscard]] bool omatch(const tvm::transition_matchable&) const override;
+
       public:
         /**
          * Creates a wildcard symbol. Will always match with a matchable.

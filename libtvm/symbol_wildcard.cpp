@@ -35,6 +35,9 @@ bool symbol_wildcard::operator!=([[maybe_unused]] const symbol_wildcard& s) cons
     return false;
 }
 
+bool symbol_wildcard::omatch([[maybe_unused]] const transition_matchable& m) const {
+    return true;
+}
 bool symbol_wildcard::match([[maybe_unused]] const transition_matchable& m) const {
     return true;
 }

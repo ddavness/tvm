@@ -12,6 +12,9 @@
 
 namespace tvm {
     class symbol final: public tvm::transition_matchable {
+      private:
+        [[nodiscard]] bool omatch(const tvm::transition_matchable&) const override;
+
       public:
         /**
          * Creates a new blank symbol.
