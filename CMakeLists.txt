@@ -31,7 +31,7 @@ message( STATUS "Found vcpkg at ${VCPKG}" )
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG}/scripts/buildsystems/vcpkg.cmake")
 
 # Turing Virtual Machine
-project(tvm VERSION 0.0.2)
+project(tvm VERSION 0.0.3)
 
 # Don't mess with output names. No weird prefixes, please!
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
