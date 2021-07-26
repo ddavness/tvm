@@ -21,7 +21,7 @@ format:
   command_case: canonical
   keyword_case: upper
   enable_sort: true
-  autosort: true
+  autosort: false
   require_valid_layout: false
 
 markup:
