@@ -2,6 +2,7 @@
 
 add_library(
     libtvm SHARED
+    # Domain
     machine.cpp
     state.cpp
     symbol.cpp
@@ -10,6 +11,8 @@ add_library(
     transition.cpp
     transition_matchable.cpp
     version.cpp
+    # Builders
+    builder/machine_builder.cpp
 )
 
 configure_file(version.hpp.in version.hpp)
