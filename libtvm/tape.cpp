@@ -66,7 +66,7 @@ void tape::left() {
     // Already at the leftmost of the deque, just add a blank symbol at the start of said deque
     if (needle-- == 0) {
         needle++; // cannot go below zero
-        contents.emplace_front(symbol());
+        contents.emplace_front();
         return;
     }
 }
@@ -81,6 +81,6 @@ void tape::right() {
 
     // Already at the rightmost of the deque, just add a blank symbol at the end of said deque
     if (++needle == contents.size()) {
-        contents.emplace_back(symbol());
+        contents.emplace_back();
     }
 }
