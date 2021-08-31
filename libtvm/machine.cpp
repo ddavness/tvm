@@ -27,7 +27,7 @@ using tvm::state;
 using tvm::transition;
 
 machine::machine(const string name): tag(name) {
-    user_states.at(initial) = vector<tuple<transition, state&>>();
+    user_states.insert({initial, vector<tuple<transition, const state&>>()});
 }
 
 const string& machine::name() const {

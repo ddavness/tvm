@@ -31,7 +31,7 @@ namespace tvm {
         const tvm::state abort = tvm::state("ABORT");
         const tvm::state initial = tvm::state("START");
 
-        std::unordered_map<tvm::state, std::vector<std::tuple<tvm::transition, tvm::state&>>> user_states;
+        std::unordered_map<tvm::state, std::vector<std::tuple<tvm::transition, const tvm::state&>>> user_states;
 
         friend class tvm::builder::machine_builder;
 

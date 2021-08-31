@@ -8,6 +8,7 @@ add_executable(
     transition.spec.cpp
     tvm.spec.cpp
     version.spec.cpp
+    machine.spec.cpp
 )
 
 find_package(doctest REQUIRED)

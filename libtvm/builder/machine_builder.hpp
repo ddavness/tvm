@@ -20,8 +20,12 @@ namespace tvm::builder {
       public:
         machine_builder(std::string);
 
+        const tvm::state& start_state();
+        const tvm::state& accept_state();
+        const tvm::state& reject_state();
+
         tvm::builder::machine_builder& add_state(tvm::state);
-        tvm::builder::machine_builder& add_transition(tvm::state&, tvm::transition, tvm::state&);
+        tvm::builder::machine_builder& add_transition(const tvm::state&, tvm::transition, const tvm::state&);
 
         [[nodiscard]] const tvm::machine& finalize();
     };
