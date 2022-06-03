@@ -21,11 +21,16 @@ elseif(EXISTS $ENV{VCPKG_ROOT})
     set(VCPKG $ENV{VCPKG_ROOT})
 elseif(EXISTS $ENV{VCPKG_INSTALLATION_ROOT})
     set(VCPKG $ENV{VCPKG_INSTALLATION_ROOT})
+elseif(EXISTS ./vcpkg)
+    set(VCPKG ./vcpkg)
 else()
     message(
         FATAL_ERROR
-            "Couldn't find vcpkg anywhere! Please make sure that AT LEAST ONE of these environment variables is set:
-    VCPKG or VCPKG_ROOT or VCPKG_INSTALLATION_ROOT"
+"Couldn't find vcpkg anywhere! Please make sure that AT LEAST ONE of these environment variables is set:
+    VCPKG or VCPKG_ROOT or VCPKG_INSTALLATION_ROOT
+    
+Or, clone the vcpkg repository inside this one:
+    git clone --depth 1 https://github.com/microsoft/vcpkg"
     )
 endif()
 

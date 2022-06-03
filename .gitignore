@@ -6,3 +6,6 @@ build
 
 # Visual Studio cache
 .vs
+
+# Vcpkg cache
+vcpkg
