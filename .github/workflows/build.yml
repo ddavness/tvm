@@ -9,13 +9,17 @@ jobs:
           - plat: ubuntu-latest
             triplet: x64-linux
             csharp: mono
+            aptautoconf: sudo apt-get install -y autoconf-archive
           - plat: windows-latest
             triplet: x64-windows
             csharp: ''
+            aptautoconf: echo "Not Applicable"
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
+            aptautoconf: echo "Not Applicable"
     runs-on: ${{ matrix.plat }}
+    continue-on-error: true
     env:
       VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
@@ -34,7 +38,8 @@ jobs:
           -name "GitHub"
           -username "${{ github.repository_owner }}"
           -password "${{ secrets.GITHUB_TOKEN }}"
-        
+      - name: Install Autoconf Macros
+        run: ${{ matrix.aptautoconf }}
       - name: Run CMake generator
         run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
       - name: Build project
