@@ -22,7 +22,7 @@ using tvm::tape;
 machine_instance::machine_instance(tvm::machine& m, vector<tape> t):
     memory(std::move(t)),
     target(m),
-    current(m.start()) {};
+    current(m.start()) {}
 
 const machine& machine_instance::machine() const {
     return target;
