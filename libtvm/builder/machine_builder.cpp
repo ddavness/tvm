@@ -29,8 +29,8 @@ const state& machine_builder::reject_state() {
 }
 
 machine_builder& machine_builder::add_state(state s) {
-    if (mach.user_states.find(s) != mach.user_states.end()) {
-        mach.user_states.at(s) = vector<tuple<transition, const state&>>();
+    if (mach.user_states.find(s) == mach.user_states.end()) {
+        mach.user_states.emplace(s, vector<tuple<transition, const state&>>());
     } else {
         throw "State already exists!";
     }

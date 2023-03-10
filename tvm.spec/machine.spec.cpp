@@ -31,7 +31,7 @@ TEST_SUITE("Building Turing Machines") {
         CHECK(mach.start() == mb.start_state());
     }
 
-    TEST_CASE("Create and run a basic machine") {
+    TEST_CASE("Create and run a machine with two states between start and finish") {
         /*
             Machine blueprint is as follows:
             <START> ---> *,1,R ---> <S1> ---> *,0,R ---> <S2> ---> *,1,S ---> <ACCEPT>
