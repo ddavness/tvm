@@ -3,6 +3,7 @@
 add_library(
     libtvm SHARED
     # Domain
+    machine_instance.cpp
     machine.cpp
     state.cpp
     symbol.cpp

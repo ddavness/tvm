@@ -33,7 +33,9 @@ using tvm::transition_matchable;
 transition::transition(const vector<ref<const transition_matchable>>& read,
     const vector<ref<const transition_matchable>>& totape,
     const vector<tape_transition>& move) {
-    // TODO: Vector length checks
+    if (read.size() != totape.size() || totape.size() != move.size()) {
+        // TODO: Throw (inconsistent sizes)
+    }
 
     for (ref<const transition_matchable> r: read) {
         expect.push_back(r);
@@ -64,4 +66,8 @@ bool transition::match_and_run(vector<tape>& tapes) const {
     }
 
     return true;
+}
+
+size_t transition::size() const {
+    return expect.size();
 }

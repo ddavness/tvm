@@ -23,5 +23,6 @@ namespace tvm {
             const std::vector<tvm::tape_transition>&);
 
         [[nodiscard]] bool match_and_run(std::vector<tvm::tape>&) const;
+        [[nodiscard]] size_t size() const;
     };
 } // namespace tvm

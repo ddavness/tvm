@@ -32,22 +32,37 @@ machine_builder& machine_builder::add_state(state s) {
     if (mach.user_states.find(s) != mach.user_states.end()) {
         mach.user_states.at(s) = vector<tuple<transition, const state&>>();
     } else {
-        ; // TODO: Throw
+        throw "State already exists!";
     }
 
     return *this;
 }
 
 machine_builder& machine_builder::add_transition(const state& from, transition t, const state& to) {
-    if (mach.user_states.find(from) != mach.user_states.end() && mach.user_states.find(to) != mach.user_states.end()) {
-        mach.user_states.at(from).emplace_back(t, to);
-    } else {
-        ; // TODO: Throw
+    if (mach.tape_number != 0 && t.size() != mach.tape_number) {
+        throw "Inconsistent tape lengths";
+    }
+
+    if (mach.user_states.find(from) == mach.user_states.end()
+        || (!mach.is_end(to) && mach.user_states.find(to) == mach.user_states.end())) {
+        throw "State not found";
+    }
+
+    if (mach.is_end(from)) {
+        throw "Transition starts from and end state";
+    }
+
+    mach.user_states.at(from).emplace_back(t, to);
+    if (mach.tape_number == 0) {
+        mach.tape_number = t.size();
     }
 
     return *this;
 }
 
 const machine& machine_builder::finalize() {
+    if (mach.tape_number == 0) {
+        throw "No transitions were added!";
+    }
     return mach;
 }

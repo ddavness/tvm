@@ -9,20 +9,25 @@
 using tvm::symbol;
 
 TEST_SUITE("Manipulating tapes") {
+    const symbol blank;
+
     TEST_CASE("Empty tapes return empty symbols") {
         tvm::tape t;
 
         CHECK(!t.read());
+        CHECK(t.read() == blank);
         t.move(tvm::tape_transition::LEFT);
         CHECK(!t.read());
+        CHECK(t.read() == blank);
         t.move(tvm::tape_transition::RIGHT);
         t.move(tvm::tape_transition::RIGHT);
         CHECK(!t.read());
+        CHECK(t.read() == blank);
     }
 
     const std::vector<symbol> container {symbol('x'),
         symbol('y'),
-        symbol(static_cast<UChar32>(U'💻')),
+        symbol(static_cast<UChar32>(U'🍬')),
         symbol('_'),
         symbol(static_cast<UChar32>(U'💻'))};
 
@@ -45,7 +50,7 @@ TEST_SUITE("Manipulating tapes") {
         t.move(tvm::tape_transition::LEFT);
         CHECK(t.read() == container.at(3));
         t.move(tvm::tape_transition::LEFT);
-        CHECK(t.read() == container.at(4));
+        CHECK(t.read() == container.at(2));
     }
 
     TEST_CASE("After moving the needle with the STAY transition, the symbol read is the same") {
