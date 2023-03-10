@@ -16,16 +16,8 @@ jobs:
           submodules: recursive
       - name: Install Autoconf Macros
         run: sudo apt-get install -y autoconf-archive
-      - name: Setup NuGet credentials for vcpkg binary-caching
-        shell: bash
-        run: >
-          mono `vcpkg fetch nuget | tail -n 1`
-          sources add
-          -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-          -storepasswordincleartext
-          -name "GitHub"
-          -username "${{ github.repository_owner }}"
-          -password "${{ secrets.GITHUB_TOKEN }}"
+      - name: Install Dependencies
+        run: sudo apt-get install -y libicu-dev doctest-dev
       - name: Install and update clang tools
         shell: bash
         run: |
