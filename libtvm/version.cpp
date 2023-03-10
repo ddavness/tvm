@@ -29,5 +29,5 @@ string tvm::unicode_version() {
     u_getUnicodeVersion(static_cast<uint8_t*>(v));
     u_versionToString(static_cast<uint8_t*>(v), vcstr.data());
 
-    return string(vcstr.data());
+    return {vcstr.data()};
 }
