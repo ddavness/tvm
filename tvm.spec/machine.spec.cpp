@@ -64,4 +64,62 @@ TEST_SUITE("Building Turing Machines") {
         t.move(tape_transition::LEFT);
         CHECK(t.read() == one);
     }
+
+    TEST_CASE("Create and run a machine with looping transitions. Wildcards are defined last.") {
+        /*
+            Machine blueprint is as follows:
+            <START> ↺ *,*,R
+               ↳ _,_,L ---> <SW> ---> _,_,R ---> <ACCEPT>
+                             ↺ A,b,L
+                             ↺ b,a,L
+                             ↺ a,B,L
+                             ↺ B,A,L
+                             ↺ *,*,L
+        */
+
+        symbol_wildcard w;
+        symbol blank;
+        symbol abig('A');
+        symbol asmol('a');
+        symbol bbig('B');
+        symbol bsmol('b');
+
+        symbol rocket('r');
+
+        state state_write = state("SW");
+
+        machine_builder mb("AbaB");
+
+        machine m =
+            mb.add_state(state_write)
+                .add_transition(mb.start_state(), transition({blank}, {blank}, {tape_transition::LEFT}), state_write)
+                .add_transition(mb.start_state(), transition({w}, {w}, {tape_transition::RIGHT}), mb.start_state())
+                .add_transition(state_write, transition({abig}, {bsmol}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({bsmol}, {asmol}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({asmol}, {bbig}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({bbig}, {abig}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({blank}, {blank}, {tape_transition::RIGHT}), mb.accept_state())
+                .add_transition(state_write, transition({w}, {w}, {tape_transition::LEFT}), state_write)
+                .finalize();
+
+        tape t({rocket, abig, asmol, rocket, bbig, bsmol, bsmol});
+        machine_instance exec = m.fork({t});
+
+        exec.run();
+
+        t = exec.tapes().at(0);
+        CHECK(t.read() == rocket);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == bsmol);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == bbig);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == rocket);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == abig);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == asmol);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == asmol);
+    }
 }
