@@ -49,7 +49,7 @@ machine_builder& machine_builder::add_transition(const state& from, transition t
     }
 
     if (mach.is_end(from)) {
-        throw "Transition starts from and end state";
+        throw "Transition starts from an end state";
     }
 
     mach.user_states.at(from).emplace_back(t, to);
