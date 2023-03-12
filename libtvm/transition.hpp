@@ -24,5 +24,6 @@ namespace tvm {
 
         [[nodiscard]] bool match_and_run(std::vector<tvm::tape>&) const;
         [[nodiscard]] size_t size() const;
+        [[nodiscard]] size_t num_wildcards() const;
     };
 } // namespace tvm

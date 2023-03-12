@@ -12,6 +12,7 @@
 #include "libtvm/transition.hpp"
 
 #include "libtvm/symbol.hpp"
+#include "libtvm/symbol_wildcard.hpp"
 #include "libtvm/tape.hpp"
 #include "libtvm/transition_matchable.hpp"
 
@@ -70,4 +71,17 @@ bool transition::match_and_run(vector<tape>& tapes) const {
 
 size_t transition::size() const {
     return expect.size();
+}
+
+size_t transition::num_wildcards() const {
+    symbol_wildcard any;
+    size_t wcards = 0;
+
+    for (const transition_matchable& m: expect) {
+        if (m.omatch(any)) {
+            wcards++;
+        }
+    }
+
+    return wcards;
 }
