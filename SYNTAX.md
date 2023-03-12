@@ -107,6 +107,34 @@ t1 * 1 R t1
 t1 1 1 L ACCEPT // This one will be checked first
 ```
 
+- In case of multi-tape transitions, the priority of the transitions will depend on the number of wildcards.
+The order within transitions with the same number of wilcards will be the one present in the file:
+
+```c
+t1 ***** 00000 S ACCEPT
+t1 2***1 29851 L t3
+t1 *2345 12345 R a1
+t1 21*** 21000 L t4
+t1 12345 54321 R t2
+t1 *2*2* 22222 S t5
+t1 1*345 12345 R a1
+t1 q**ck quack R a2
+
+// Order of checking. First to match executes.
+t1 12345 54321 R t2     // 0 wildcards
+
+t1 *2345 12345 R a1     // 1 wildcard
+t1 1*345 12345 R a1
+
+t1 q**ck quack R a2     // 2 wildcards
+
+t1 2***1 29851 L t3     // 3 wildcards
+t1 21*** 21000 L t4
+t1 *2*2* 22222 S t5
+
+t1 ***** 00000 S ACCEPT // 5 wildcards
+```
+
 - If the current `<STATE>`, `<TAPE>` tuple doesn't match any transition, the machine will be forcefully halted and the program will exit with code `<TBD>`.
 
 - One turing machine per file.
