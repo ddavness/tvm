@@ -10,14 +10,17 @@ jobs:
             triplet: x64-linux
             csharp: mono
             aptautoconf: sudo apt-get install -y autoconf-archive libicu-dev doctest-dev
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON
           - plat: windows-latest
             triplet: x64-windows
             csharp: ''
             aptautoconf: echo "Not Applicable"
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
             aptautoconf: echo "Not Applicable"
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
     env:
@@ -41,7 +44,7 @@ jobs:
       - name: Install Autoconf Macros
         run: ${{ matrix.aptautoconf }}
       - name: Run CMake generator
-        run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
+        run: cmake . -B build ${{ matrix.cmakeflags }}
       - name: Build project
         run: cmake --build build --config Debug
       - name: Run unit tests
