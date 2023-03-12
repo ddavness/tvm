@@ -5,10 +5,10 @@
 #include <iostream>
 #include <string>
 
-TEST_SUITE("Manipulating symbols") {
+TEST_SUITE("01 - Manipulating symbols") {
     const UChar blank = '_';
 
-    TEST_CASE("Blank symbol semantics are correct") {
+    TEST_CASE("01.01 - Blank symbol semantics are correct") {
         tvm::symbol sym0;
 
         SUBCASE("An unitialized symbol is blank") {
@@ -36,7 +36,7 @@ TEST_SUITE("Manipulating symbols") {
     const UChar japanese = u'ツ';
     const UChar32 emoji = U'🚀';
 
-    TEST_CASE("General symbol semantics") {
+    TEST_CASE("01.02 - General symbol semantics") {
         tvm::symbol sym0(blank);
         tvm::symbol sym1(ascii);
         tvm::symbol sym2(cyrillic);
@@ -91,7 +91,7 @@ TEST_SUITE("Manipulating symbols") {
         }
     }
 
-    TEST_CASE("Symbol matching") {
+    TEST_CASE("01.03 - Symbol matching") {
         tvm::symbol s0;
         tvm::symbol s1(ascii);
         tvm::symbol s2(emoji);

@@ -2,13 +2,13 @@
 
 add_executable(
     tvm_spec
-    symbol.spec.cpp
-    symbol_wildcard.spec.cpp
-    tape.spec.cpp
-    transition.spec.cpp
+    00-version.spec.cpp
+    01-symbol.spec.cpp
+    02-symbol_wildcard.spec.cpp
+    03-tape.spec.cpp
+    04-transition.spec.cpp
+    05-machine.spec.cpp
     tvm.spec.cpp
-    version.spec.cpp
-    machine.spec.cpp
 )
 
 find_package(doctest REQUIRED)

@@ -1,6 +1,5 @@
-#include "libtvm/machine.hpp"
-
 #include "libtvm/builder/machine_builder.hpp"
+#include "libtvm/machine.hpp"
 #include "libtvm/state.hpp"
 #include "libtvm/symbol.hpp"
 #include "libtvm/symbol_wildcard.hpp"
@@ -20,8 +19,8 @@ using tvm::transition;
 
 using tvm::builder::machine_builder;
 
-TEST_SUITE("Building Turing Machines") {
-    TEST_CASE("Build an empty machine") {
+TEST_SUITE("05 - Building Turing Machines") {
+    TEST_CASE("05.01 - Build an empty machine") {
         symbol_wildcard w;
         transition stay({w}, {w}, {tape_transition::STAY});
         machine_builder mb("basic");
@@ -31,7 +30,7 @@ TEST_SUITE("Building Turing Machines") {
         CHECK(mach.start() == mb.start_state());
     }
 
-    TEST_CASE("Create and run a machine with two states between start and finish") {
+    TEST_CASE("05.02 - Create and run a machine with two states between start and finish") {
         /*
             Machine blueprint is as follows:
             <START> ---> *,1,R ---> <S1> ---> *,0,R ---> <S2> ---> *,1,S ---> <ACCEPT>
@@ -65,7 +64,7 @@ TEST_SUITE("Building Turing Machines") {
         CHECK(t.read() == one);
     }
 
-    TEST_CASE("Create and run a machine with looping transitions. Wildcards are defined last.") {
+    TEST_CASE("05.03 - Create and run a machine with looping transitions. Wildcards are defined last.") {
         /*
             Machine blueprint is as follows:
             <START> ↺ *,*,R
@@ -123,7 +122,7 @@ TEST_SUITE("Building Turing Machines") {
         CHECK(t.read() == asmol);
     }
 
-    TEST_CASE("Create and run a machine with looping transitions. Wildcards are defined first.") {
+    TEST_CASE("05.04 - Create and run a machine with looping transitions. Wildcards are defined first.") {
         /*
             Machine blueprint is as follows:
             <START> ↺ *,*,R
@@ -172,7 +171,7 @@ TEST_SUITE("Building Turing Machines") {
         CHECK(t.read() == blank);
     }
 
-    TEST_CASE("Makes sure that for any machine, only one (state_from, transition_expect) pair exists.") {
+    TEST_CASE("05.05 - Makes sure that for any machine, only one (state_from, transition_expect) pair exists.") {
         /*
             Machine blueprint is as follows:
             <START> ↺ *,0,R

@@ -1,6 +1,5 @@
-#include "libtvm/tape.hpp"
-
 #include "libtvm/symbol.hpp"
+#include "libtvm/tape.hpp"
 
 #include <doctest/doctest.h>
 #include <unicode/unistr.h>
@@ -8,10 +7,10 @@
 
 using tvm::symbol;
 
-TEST_SUITE("Manipulating tapes") {
+TEST_SUITE("03 - Manipulating tapes") {
     const symbol blank;
 
-    TEST_CASE("Empty tapes return empty symbols") {
+    TEST_CASE("03.01 - Empty tapes return empty symbols") {
         tvm::tape t;
 
         CHECK(!t.read());
@@ -31,7 +30,7 @@ TEST_SUITE("Manipulating tapes") {
         symbol('_'),
         symbol(static_cast<UChar32>(U'💻'))};
 
-    TEST_CASE("Tapes can be created from a container") {
+    TEST_CASE("03.02 - Tapes can be created from a container") {
         tvm::tape t(container);
 
         CHECK(t.read() == container.at(0));
@@ -43,7 +42,7 @@ TEST_SUITE("Manipulating tapes") {
         CHECK(t.read() == container.at(1));
     }
 
-    TEST_CASE("The needle position can be set when creating a tape") {
+    TEST_CASE("03.03 - The needle position can be set when creating a tape") {
         tvm::tape t(container, 4);
 
         CHECK(t.read() == container.at(4));
@@ -53,7 +52,7 @@ TEST_SUITE("Manipulating tapes") {
         CHECK(t.read() == container.at(2));
     }
 
-    TEST_CASE("After moving the needle with the STAY transition, the symbol read is the same") {
+    TEST_CASE("03.04 - After moving the needle with the STAY transition, the symbol read is the same") {
         const symbol s('@');
         tvm::tape t({s});
 
@@ -62,7 +61,7 @@ TEST_SUITE("Manipulating tapes") {
         CHECK(t.read() == s);
     }
 
-    TEST_CASE("Write a symbol, then read it") {
+    TEST_CASE("03.05 - Write a symbol, then read it") {
         tvm::tape t;
         symbol s('$');
 

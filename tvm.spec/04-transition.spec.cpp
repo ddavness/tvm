@@ -1,8 +1,7 @@
-#include "libtvm/transition.hpp"
-
 #include "libtvm/symbol.hpp"
 #include "libtvm/symbol_wildcard.hpp"
 #include "libtvm/tape.hpp"
+#include "libtvm/transition.hpp"
 
 #include <doctest/doctest.h>
 #include <unicode/unistr.h>
@@ -18,11 +17,11 @@ using tvm::tape;
 using tvm::tape_transition;
 using tvm::transition;
 
-TEST_SUITE("State transitions") {
+TEST_SUITE("04 - State transitions") {
     const symbol x('a'), y('b'), z('@');
     const tvm::symbol_wildcard wc;
 
-    TEST_CASE("Transitions with one tape") {
+    TEST_CASE("04.01 - Transitions with one tape") {
         transition t({y}, {z}, {tape_transition::STAY});
         vector<tape> t1({tape({x})});
         vector<tape> t2({tape({y})});
@@ -34,7 +33,7 @@ TEST_SUITE("State transitions") {
         CHECK(t2.at(0).read() == z);
     }
 
-    TEST_CASE("Transitions matching more than one tape") {
+    TEST_CASE("04.02 - Transitions matching more than one tape") {
         transition t({x, y, y}, {z, z, z}, {tape_transition::STAY, tape_transition::STAY, tape_transition::STAY});
         vector<tape> tt({tape({x}), tape({y}), tape({y})});
 
@@ -45,7 +44,7 @@ TEST_SUITE("State transitions") {
         CHECK(tt.at(2).read() == z);
     }
 
-    TEST_CASE("Transitons do not run if not all tapes match") {
+    TEST_CASE("04.03 - Transitons do not run if not all tapes match") {
         transition t({x, y, z}, {z, x, y}, {tape_transition::LEFT, tape_transition::RIGHT, tape_transition::LEFT});
         vector<tape> tt({tape({x}), tape({y}), tape({y})});
         tape t1({x});
@@ -59,7 +58,7 @@ TEST_SUITE("State transitions") {
         CHECK(tt.at(2).read() == y);
     }
 
-    TEST_CASE("Wildcards will match with anything") {
+    TEST_CASE("04.04 - Wildcards will match with anything") {
         transition t({wc, wc}, {x, x}, {tape_transition::STAY, tape_transition::STAY});
         vector<tape> tt({tape({z}), tape({x})});
         vector<tape> uu({tape({y}), tape({y})});
@@ -73,7 +72,7 @@ TEST_SUITE("State transitions") {
         CHECK(uu.at(1).read() == x);
     }
 
-    TEST_CASE("Wildcard writing") {
+    TEST_CASE("04.05 - Wildcard writing") {
         transition t({wc}, {wc}, {tape_transition::RIGHT});
         vector<tape> tt({tape({x, y})});
 
