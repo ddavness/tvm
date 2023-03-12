@@ -14,6 +14,11 @@ namespace tvm {
 
       protected:
         transition_matchable(int32_t);
+        ~transition_matchable() = default;
+        transition_matchable(const transition_matchable&) = default;
+        transition_matchable& operator=(const transition_matchable&) = default;
+        transition_matchable(transition_matchable&&) = default;
+        transition_matchable& operator=(transition_matchable&&) = default;
 
       public:
         [[nodiscard]] virtual bool omatch(const tvm::transition_matchable&) const = 0;
