@@ -9,7 +9,7 @@ jobs:
           - plat: ubuntu-latest
             triplet: x64-linux
             csharp: mono
-            aptautoconf: sudo apt-get install -y autoconf-archive
+            aptautoconf: sudo apt-get install -y autoconf-archive libicu-dev doctest-dev
           - plat: windows-latest
             triplet: x64-windows
             csharp: ''
