@@ -17,11 +17,13 @@
 #include "libtvm/tape.hpp"
 #include "libtvm/transition.hpp"
 
+#include <forward_list>
 #include <string>
 #include <tuple>
 #include <unordered_map>
 #include <vector>
 
+using std::forward_list;
 using std::string;
 using std::tuple;
 using std::vector;
@@ -33,7 +35,7 @@ using tvm::tape;
 using tvm::transition;
 
 machine::machine(const string name): tag(name) {
-    user_states.insert({initial, vector<tuple<transition, const state&>>()});
+    user_states.insert({initial, forward_list<tuple<transition, const state&>>()});
 }
 
 const string& machine::name() const {

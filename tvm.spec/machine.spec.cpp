@@ -122,4 +122,53 @@ TEST_SUITE("Building Turing Machines") {
         t.move(tape_transition::RIGHT);
         CHECK(t.read() == asmol);
     }
+
+    TEST_CASE("Create and run a machine with looping transitions. Wildcards are defined first.") {
+        /*
+            Machine blueprint is as follows:
+            <START> ↺ *,*,R
+               ↳ _,_,L ---> <SW> ---> _,_,R ---> <ACCEPT>
+                             ↺ *,0,L
+        */
+
+        symbol_wildcard w;
+        symbol blank;
+        symbol clean('0');
+        symbol gar('1');
+        symbol ba('2');
+        symbol ge('3');
+
+        state state_write = state("SW");
+
+        machine_builder mb("garbage");
+
+        machine m =
+            mb.add_state(state_write)
+                .add_transition(mb.start_state(), transition({w}, {w}, {tape_transition::RIGHT}), mb.start_state())
+                .add_transition(mb.start_state(), transition({blank}, {blank}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({w}, {clean}, {tape_transition::LEFT}), state_write)
+                .add_transition(state_write, transition({blank}, {blank}, {tape_transition::RIGHT}), mb.accept_state())
+                .finalize();
+
+        tape t({gar, ba, ge, gar, ge, ba});
+
+        machine_instance exec = m.fork({t});
+
+        exec.run();
+
+        t = exec.tapes().at(0);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == clean);
+        t.move(tape_transition::RIGHT);
+        CHECK(t.read() == blank);
+    }
 }

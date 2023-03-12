@@ -11,10 +11,10 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <forward_list>
 #include <string>
 #include <tuple>
 #include <unordered_map>
-#include <vector>
 
 namespace tvm::builder {
     class machine_builder;
@@ -36,7 +36,7 @@ namespace tvm {
         const tvm::state abort = tvm::state("__tvm__ABORT__");
         const tvm::state initial = tvm::state("__tvm__START__");
 
-        std::unordered_map<tvm::state, std::vector<std::tuple<tvm::transition, const tvm::state&>>> user_states;
+        std::unordered_map<tvm::state, std::forward_list<std::tuple<tvm::transition, const tvm::state&>>> user_states;
 
         friend class tvm::builder::machine_builder;
         friend class tvm::machine_instance;

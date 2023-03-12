@@ -3,10 +3,14 @@
 #include "libtvm/machine.hpp"
 #include "libtvm/transition.hpp"
 
+#include <cstddef>
+#include <forward_list>
 #include <string>
 #include <tuple>
 #include <vector>
 
+using std::forward_list;
+using std::get;
 using std::string;
 using std::tuple;
 using std::vector;
@@ -30,7 +34,7 @@ const state& machine_builder::reject_state() {
 
 machine_builder& machine_builder::add_state(state s) {
     if (mach.user_states.find(s) == mach.user_states.end()) {
-        mach.user_states.emplace(s, vector<tuple<transition, const state&>>());
+        mach.user_states.emplace(s, forward_list<tuple<transition, const state&>>());
     } else {
         throw "State already exists!";
     }
@@ -52,7 +56,22 @@ machine_builder& machine_builder::add_transition(const state& from, transition t
         throw "Transition starts from an end state";
     }
 
-    mach.user_states.at(from).emplace_back(t, to);
+    auto& bucket = mach.user_states.at(from);
+    size_t nw = t.num_wildcards();
+    for (auto it = bucket.before_begin(); it != bucket.end();) {
+        auto here = it;
+        it++;
+        if (it == bucket.end() || get<0>(*it).num_wildcards() > nw) {
+            // We've reached the end
+            bucket.emplace_after(here, t, to);
+            break;
+        }
+
+        if (t.same_expect(get<0>(*(it)))) {
+            throw "Non-deterministic code is not supported!";
+        }
+    }
+
     if (mach.tape_number == 0) {
         mach.tape_number = t.size();
     }
