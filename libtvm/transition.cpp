@@ -85,3 +85,17 @@ size_t transition::num_wildcards() const {
 
     return wcards;
 }
+
+bool transition::same_expect(const transition& other) const {
+    if (size() != other.size()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < size(); ++i) {
+        if (expect.at(i).get().index() != other.expect.at(i).get().index()) {
+            return false;
+        }
+    }
+
+    return true;
+}
