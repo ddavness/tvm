@@ -171,4 +171,30 @@ TEST_SUITE("Building Turing Machines") {
         t.move(tape_transition::RIGHT);
         CHECK(t.read() == blank);
     }
+
+    TEST_CASE("Makes sure that for any machine, only one (state_from, transition_expect) pair exists.") {
+        /*
+            Machine blueprint is as follows:
+            <START> ↺ *,0,R
+               ↳ *,1,R ---> <ACCEPT>
+        */
+
+        symbol_wildcard w;
+        symbol blank;
+        symbol zero('0');
+        symbol one('1');
+
+        machine_builder mb("np");
+        REQUIRE_THROWS_WITH(
+            [&]() {
+                machine m = mb.add_transition(mb.start_state(),
+                                  transition({w}, {w}, {tape_transition::RIGHT}),
+                                  mb.accept_state())
+                                .add_transition(mb.start_state(),
+                                    transition({w}, {w}, {tape_transition::RIGHT}),
+                                    mb.accept_state())
+                                .finalize();
+            }(),
+            "Non-deterministic code is not supported!");
+    }
 }
