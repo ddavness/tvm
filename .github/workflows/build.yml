@@ -49,3 +49,10 @@ jobs:
         run: cmake --build build --config Debug
       - name: Run unit tests
         run: build/bin/tvm_spec
+      - name: Set up coverage
+        if: env.VCPKG_DEFAULT_TRIPLET == 'x64-linux'
+        run: cd build && make coverage
+      - name: Coveralls
+        if: env.VCPKG_DEFAULT_TRIPLET == 'x64-linux'
+        uses: coverallsapp/github-action@v2.2.3
+
