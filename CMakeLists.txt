@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13.0) # Version distributed by Debian Buster (1
 
 option(WITH_VCPKG "Use vcpkg" OFF)
 option(WITH_TESTS "Also compile test executables" OFF)
+option(WITH_COVERAGE "Also add test coverage information" OFF)
 
 # Place everything in one place so that shared libraries are easily obtained
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -51,6 +52,8 @@ endif()
 # Turing Virtual Machine
 project(tvm VERSION 0.0.3)
 
+list(APPEND CMAKE_MODULE_PATH "./cmake-modules")
+
 # Don't mess with output names. No weird prefixes, please!
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 set(CMAKE_STATIC_LIBRARY_PREFIX "")
@@ -74,6 +77,23 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 add_subdirectory(libtvm)
 
 if(WITH_TESTS)
-    message(STATUS " * Adding the tests to the build pipeline.")
+    message(STATUS " * Adding the tests to the build pipeline")
     add_subdirectory(tvm.spec)
+endif()
+
+if(WITH_COVERAGE)
+    if(WITH_TESTS)
+        message(STATUS " * Setting up coverage information")
+        include(CodeCoverage)
+        append_coverage_compiler_flags_to_target(libtvm)
+        setup_target_for_coverage_lcov(
+            NAME coverage
+            EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/tvm_spec
+            DEPENDENCIES tvm_spec
+            BASE_DIRECTORY "."
+        )
+        add_compile_options(-O0)
+    else()
+        message(WARNING " * WITH_COVERAGE was set, but WITH_TESTS was not. Skipping coverage step")
+    endif()
 endif()
