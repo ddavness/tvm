@@ -10,17 +10,17 @@ jobs:
             triplet: x64-linux
             csharp: mono
             aptautoconf: sudo apt-get install -y autoconf-archive libicu-dev doctest-dev
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=ON
           - plat: windows-latest
             triplet: x64-windows
             csharp: ''
             aptautoconf: echo "Not Applicable"
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
             aptautoconf: echo "Not Applicable"
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
     env:
