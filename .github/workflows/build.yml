@@ -21,8 +21,8 @@ jobs:
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
-            toolchain: brew install ninja
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF -G ninja
+            toolchain: null
+            cmakeflags: -G Xcode -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
             vcpkg: true
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
