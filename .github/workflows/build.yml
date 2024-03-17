@@ -32,6 +32,7 @@ jobs:
         with:
           submodules: recursive
       - name: Setup NuGet credentials for vcpkg binary-caching
+        if: env.VCPKG_DEFAULT_TRIPLET != 'x64-linux'
         shell: bash
         run: >
           ${{ matrix.csharp }} `vcpkg fetch nuget | tail -n 1`
@@ -55,4 +56,5 @@ jobs:
       - name: Coveralls
         if: env.VCPKG_DEFAULT_TRIPLET == 'x64-linux'
         uses: coverallsapp/github-action@v2.2.3
-
+        with:
+          file: ./coverage.info
