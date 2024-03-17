@@ -91,6 +91,7 @@ if(WITH_COVERAGE)
             EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/tvm_spec
             DEPENDENCIES tvm_spec
             BASE_DIRECTORY "."
+            LCOV_ARGS "--no-external"
         )
         add_compile_options(-O0)
     else()
