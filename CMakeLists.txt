@@ -21,14 +21,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_RUNTIME_OUTPUT_DIRECTO
 if(WITH_VCPKG)
     message(STATUS " * Building with vcpkg.")
     # Look for either VCPKG_INSTALLATION_ROOT or VCPKG_ROOT or VCPKG env variables
-    if(EXISTS $ENV{VCPKG})
+    if(EXISTS ./vcpkg)
+        set(VCPKG ./vcpkg)
+    elseif(EXISTS $ENV{VCPKG})
         set(VCPKG $ENV{VCPKG})
     elseif(EXISTS $ENV{VCPKG_ROOT})
         set(VCPKG $ENV{VCPKG_ROOT})
     elseif(EXISTS $ENV{VCPKG_INSTALLATION_ROOT})
         set(VCPKG $ENV{VCPKG_INSTALLATION_ROOT})
-    elseif(EXISTS ./vcpkg)
-        set(VCPKG ./vcpkg)
     else()
         message(
             FATAL_ERROR

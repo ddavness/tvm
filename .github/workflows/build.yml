@@ -48,6 +48,9 @@ jobs:
       - name: Install required toolchains
         if: matrix.toolchain
         run: ${{ matrix.toolchain }}
+      - name: Get latest vcpkg port files
+        if: matrix.vcpkg
+        run: git clone --depth 1 'https://github.com/microsoft/vcpkg'
       - name: Run CMake generator
         run: cmake . -B build ${{ matrix.cmakeflags }} -DWITH_VCPKG=${{ matrix.vcpkg && 'ON' || 'OFF' }}
       - name: Build project
