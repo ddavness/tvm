@@ -23,4 +23,6 @@ namespace tvm {
     };
 } // namespace tvm
 
-template<> struct std::hash<tvm::state> { std::size_t operator()(const tvm::state&) const; };
+template<> struct std::hash<tvm::state> {
+    std::size_t operator()(const tvm::state&) const;
+};
