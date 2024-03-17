@@ -46,8 +46,8 @@ jobs:
           -username "${{ github.repository_owner }}"
           -password "${{ secrets.GITHUB_TOKEN }}"
       - name: Install required toolchains
-        if: matrix.aptautoconf
-        run: ${{ matrix.aptautoconf }}
+        if: matrix.toolchain
+        run: ${{ matrix.toolchain }}
       - name: Run CMake generator
         run: cmake . -B build ${{ matrix.cmakeflags }} -DWITH_VCPKG=${{ matrix.vcpkg && 'ON' || 'OFF' }}
       - name: Build project
