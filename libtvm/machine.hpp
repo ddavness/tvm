@@ -1,7 +1,7 @@
 /*
     Defines a turing machine. A turing machine is a mathematical model able to run code.
-    Computers (including smartphones, etc.) can emulate turing machines (to some degree, they don't have infinite
-    memory).
+    Computers (including smartphones, etc.) can emulate turing machines (to some degree,
+    they don't have infinite memory).
 */
 
 #pragma once
@@ -10,7 +10,6 @@
 #include "libtvm/transition.hpp"
 
 #include <cstddef>
-#include <cstdint>
 #include <forward_list>
 #include <string>
 #include <tuple>
@@ -56,7 +55,7 @@ namespace tvm {
         machine_instance(tvm::machine&, std::vector<tvm::tape>);
 
         std::vector<tvm::tape> memory;
-        tvm::machine& target;
+        const tvm::machine& target;
         tvm::state current;
 
         friend class tvm::machine;

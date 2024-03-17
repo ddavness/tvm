@@ -1,7 +1,7 @@
 # clang-tidy configuration
 # Defines what kind of potential issues to look out for
 
-Checks: 'clang-diagnostic-*,clang-analyzer-*,bugprone-*,cppcoreguidelines-*,portability-*,readability-*,modernize-*,-modernize-use-trailing-return-type,-readability-named-parameter,-readability-identifier-length'
+Checks: 'clang-diagnostic-*,clang-analyzer-*,bugprone-*,cppcoreguidelines-*,portability-*,readability-*,modernize-*,-modernize-use-trailing-return-type,-readability-named-parameter,-readability-identifier-length,-cppcoreguidelines-avoid-const-or-ref-data-members'
 WarningsAsErrors: false
 
 FormatStyle: file

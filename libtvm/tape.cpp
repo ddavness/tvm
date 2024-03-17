@@ -27,7 +27,7 @@ using tvm::tape_transition;
 
 // Public constructors
 tape::tape(): needle(0) {
-    contents.emplace_back(symbol());
+    contents.emplace_back();
 }
 tape::tape(const vector<symbol>& symbols, uint64_t n): needle(n) {
     for (symbol s: symbols) {

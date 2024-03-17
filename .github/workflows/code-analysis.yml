@@ -22,10 +22,10 @@ jobs:
         shell: bash
         run: |
           curl "https://apt.llvm.org/llvm.sh" > /tmp/llvm.sh
-          sudo bash /tmp/llvm.sh 14
-          sudo apt-get install -y clang-format-14 clang-tidy-14
-          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-14 200
-          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 200
+          sudo bash /tmp/llvm.sh 17
+          sudo apt-get install -y clang-format-17 clang-tidy-17
+          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 200
+          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 200
       - name: Run CMake generator
         run: cmake . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       - name: Run clang-format
