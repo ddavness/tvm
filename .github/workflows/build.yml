@@ -9,18 +9,21 @@ jobs:
           - plat: ubuntu-latest
             triplet: x64-linux
             csharp: mono
-            aptautoconf: sudo apt-get install -y autoconf-archive libicu-dev doctest-dev lcov
+            toolchain: sudo apt-get install -y autoconf-archive libicu-dev doctest-dev lcov
             cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=ON
+            vcpkg: false
           - plat: windows-latest
             triplet: x64-windows
             csharp: ''
-            aptautoconf: echo "Not Applicable"
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
+            toolchain: null
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
+            vcpkg: true
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
-            aptautoconf: echo "Not Applicable"
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_VCPKG=ON -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
+            toolchain: brew install make
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
+            vcpkg: true
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
     env:
@@ -32,7 +35,7 @@ jobs:
         with:
           submodules: recursive
       - name: Setup NuGet credentials for vcpkg binary-caching
-        if: env.VCPKG_DEFAULT_TRIPLET != 'x64-linux'
+        if: matrix.vcpkg
         shell: bash
         run: >
           ${{ matrix.csharp }} `vcpkg fetch nuget | tail -n 1`
@@ -42,10 +45,11 @@ jobs:
           -name "GitHub"
           -username "${{ github.repository_owner }}"
           -password "${{ secrets.GITHUB_TOKEN }}"
-      - name: Install Autoconf Macros
+      - name: Install required toolchains
+        if: matrix.aptautoconf
         run: ${{ matrix.aptautoconf }}
       - name: Run CMake generator
-        run: cmake . -B build ${{ matrix.cmakeflags }}
+        run: cmake . -B build ${{ matrix.cmakeflags }} -DWITH_VCPKG=${{ matrix.vcpkg && 'ON' || 'OFF' }}
       - name: Build project
         run: cmake --build build --config Debug
       - name: Run unit tests
@@ -58,3 +62,4 @@ jobs:
         uses: coverallsapp/github-action@v2.2.3
         with:
           file: build/coverage.info
+          format: lcov
