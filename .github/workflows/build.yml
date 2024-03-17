@@ -57,4 +57,4 @@ jobs:
         if: env.VCPKG_DEFAULT_TRIPLET == 'x64-linux'
         uses: coverallsapp/github-action@v2.2.3
         with:
-          file: ./coverage.info
+          file: build/coverage.info
