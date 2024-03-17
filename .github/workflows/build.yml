@@ -21,7 +21,7 @@ jobs:
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
-            toolchain: null
+            toolchain: brew install autoconf-archive
             cmakeflags: -G Xcode -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
             vcpkg: true
     runs-on: ${{ matrix.plat }}
