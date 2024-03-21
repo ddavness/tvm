@@ -9,7 +9,7 @@ jobs:
           - plat: ubuntu-latest
             triplet: x64-linux
             csharp: mono
-            toolchain: sudo apt-get update && sudo apt-get install -y autoconf-archive libicu-dev doctest-dev lcov
+            toolchain: sudo apt-get update ; sudo apt-get upgrade ; sudo apt-get install -y autoconf-archive libicu-dev doctest-dev lcov
             cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=ON
             vcpkg: false
           - plat: windows-latest
@@ -21,7 +21,7 @@ jobs:
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
-            toolchain: brew update && brew install autoconf-archive doctest && brew upgrade icu4c
+            toolchain: brew update ; brew upgrade ; brew install autoconf-archive doctest icu4c
             cmakeflags: -G Xcode -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
             vcpkg: false
     runs-on: ${{ matrix.plat }}
@@ -30,6 +30,10 @@ jobs:
       VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
     steps:
+      - name: Install required tools/libraries
+          if: matrix.toolchain
+          run: ${{ matrix.toolchain }}
+          continue-on-error: true
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
@@ -45,9 +49,6 @@ jobs:
           -name "GitHub"
           -username "${{ github.repository_owner }}"
           -password "${{ secrets.GITHUB_TOKEN }}"
-      - name: Install required toolchains
-        if: matrix.toolchain
-        run: ${{ matrix.toolchain }}
       - name: Get latest vcpkg port files
         if: matrix.vcpkg
         run: git clone --depth 1 'https://github.com/microsoft/vcpkg'
