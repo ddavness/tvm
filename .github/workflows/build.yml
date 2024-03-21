@@ -4,7 +4,7 @@ jobs:
   build:
     strategy:
       matrix:
-        plat: [ubuntu-latest, windows-latest, macos-latest]
+        plat: [ubuntu-latest, windows-latest, macos-latest-large]
         include:
           - plat: ubuntu-latest
             triplet: x64-linux
@@ -18,7 +18,7 @@ jobs:
             toolchain: null
             cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
             vcpkg: true
-          - plat: macos-latest
+          - plat: macos-latest-large
             triplet: x64-osx
             csharp: mono
             toolchain: brew update ; brew upgrade ; brew install autoconf-archive doctest icu4c
