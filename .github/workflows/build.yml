@@ -31,9 +31,9 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
     steps:
       - name: Install required tools/libraries
-          if: matrix.toolchain
-          run: ${{ matrix.toolchain }}
-          continue-on-error: true
+        if: matrix.toolchain
+        run: ${{ matrix.toolchain }}
+        continue-on-error: true
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
