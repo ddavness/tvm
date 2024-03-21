@@ -21,7 +21,7 @@ jobs:
           - plat: macos-latest
             triplet: x64-osx
             csharp: mono
-            toolchain: brew install autoconf-archive doctest icu4c
+            toolchain: brew install autoconf-archive doctest && brew upgrade icu4c
             cmakeflags: -G Xcode -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF
             vcpkg: false
     runs-on: ${{ matrix.plat }}
