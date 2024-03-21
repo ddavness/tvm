@@ -7,7 +7,6 @@
 #include "libtvm/transition_matchable.hpp"
 
 #include <unicode/uchar.h>
-#include <map>
 #include <ostream>
 
 namespace tvm {

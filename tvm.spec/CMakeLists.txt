@@ -11,7 +11,10 @@ add_executable(
     tvm.spec.cpp
 )
 
+find_package(ICU REQUIRED COMPONENTS uc)
 find_package(doctest REQUIRED)
 
 target_link_libraries(tvm_spec PRIVATE doctest::doctest)
+target_link_libraries(tvm_spec PRIVATE ICU::uc)
 target_link_libraries(tvm_spec PRIVATE libtvm)
+
