@@ -29,6 +29,7 @@ jobs:
     env:
       VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+      HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
     steps:
       - name: Install required tools/libraries
         if: matrix.toolchain
