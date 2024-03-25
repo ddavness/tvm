@@ -36,7 +36,7 @@ jobs:
         run: ${{ matrix.toolchain }}
         continue-on-error: true
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Setup NuGet credentials for vcpkg binary-caching
