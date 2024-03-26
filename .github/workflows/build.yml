@@ -4,7 +4,7 @@ jobs:
   build:
     strategy:
       matrix:
-        plat: [ubuntu-latest, windows-latest, macos-13]
+        plat: [ubuntu-latest, windows-latest, macos-13, macos-14]
         include:
           - plat: ubuntu-latest
             triplet: x64-linux
@@ -24,12 +24,17 @@ jobs:
             toolchain: brew install --force autoconf-archive doctest icu4c
             cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF -DCMAKE_PREFIX_PATH='/usr/local/opt/icu4c;/usr/local/opt/doctest'
             vcpkg: false
+          - plat: macos-14
+            triplet: arm64-osx
+            csharp: mono
+            toolchain: brew install --force autoconf-archive doctest icu4c
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF -DCMAKE_PREFIX_PATH='/usr/local/opt/icu4c;/usr/local/opt/doctest'
+            vcpkg: false
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
     env:
       VCPKG_BINARY_SOURCES: clear;nuget,GitHub,readwrite
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
-      HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
     steps:
       - name: Install required tools/libraries
         if: matrix.toolchain
