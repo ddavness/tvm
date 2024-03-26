@@ -28,7 +28,7 @@ jobs:
             triplet: arm64-osx
             csharp: mono
             toolchain: brew update ; brew install --force autoconf-archive doctest icu4c ; brew link icu4c
-            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF -DCMAKE_PREFIX_PATH='/usr/homebrew/opt/icu4c;/usr/homebrew/opt/doctest'
+            cmakeflags: -DCMAKE_BUILD_TYPE=Debug -DWITH_TESTS=ON -DWITH_COVERAGE=OFF -DCMAKE_PREFIX_PATH='/opt/homebrew/opt/icu4c;/opt/homebrew/opt/doctest'
             vcpkg: false
     runs-on: ${{ matrix.plat }}
     continue-on-error: true
